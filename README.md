@@ -28,18 +28,6 @@ the authoritative source for requirements, conventions, grading, and policy.
 - Use [`tests/test_pa1_public.py`](tests/test_pa1_public.py) for public checks.
 - See [`data/PROVENANCE.md`](data/PROVENANCE.md) for data sources and privacy notes.
 
-## Google Colab
-
-1. On GitHub, select **Code → Download ZIP** and keep the repository ZIP unopened.
-2. Use the **Open in Colab** button above.
-3. Run the notebook's environment cell and select the repository ZIP when prompted.
-4. If Colab requests a restart, restart the runtime and rerun the environment cell.
-5. Run the notebook from top to bottom, completing each required section in order.
-
-The environment cell validates the ZIP paths, extracts the repository under
-`/content`, installs `requirements-colab.txt`, generates the notebook assets,
-and sets the shared random seed.
-
 ## Local setup
 
 Python 3.10 or newer is required.
@@ -69,13 +57,6 @@ Disclose collaborators, outside resources, and every permitted use of
 generative AI in the written PDF. See the
 [assignment specification](assignment.md#4-academic-integrity-and-generative-ai-policy)
 for the complete policy.
-
-## Capture safety and privacy
-
-Do not record non-consenting people, private documents, personal information,
-unsafe activity, or restricted locations. Contact course staff before using a
-provided capture alternative for access, privacy, safety, or accessibility
-reasons.
 
 ## Submission
 
