@@ -1,0 +1,63 @@
+{
+  "flat.png": {
+    "bytes": 319,
+    "sha256": "9819dcca9856459faeda1cfaeae59c4b66d440d996599000579fa4ed554bae3c"
+  },
+  "match_difficult.png": {
+    "bytes": 150441,
+    "sha256": "37852d4030c5d03441690217e8007a794809ff3831ad40ba3c73956eeb6c6a38"
+  },
+  "match_difficult_homography": {
+    "values": [
+      [
+        0.823906243682153,
+        -0.06601642914540619,
+        38.0
+      ],
+      [
+        -0.03736751940310577,
+        0.7705286232285286,
+        22.0
+      ],
+      [
+        5.269217427574862e-05,
+        -0.0004423886716698046,
+        1.0
+      ]
+    ]
+  },
+  "match_easy.png": {
+    "bytes": 227215,
+    "sha256": "9e9d4145250848b5262ccfb0e3dc71a2eed328f4a6fabd21b935138659e7e063"
+  },
+  "match_easy_transform": {
+    "values": [
+      [
+        0.8912412618674134,
+        0.12525579086405889,
+        15.564303322655928
+      ],
+      [
+        -0.12525579086405889,
+        0.8912412618674134,
+        42.52095540674141
+      ]
+    ]
+  },
+  "photo_texture.png": {
+    "bytes": 459805,
+    "sha256": "884b6c0be0f697ee5cc7604ca3a4a93647598ac120a56b1716bfadde4e9e0ad2"
+  },
+  "smoke_object_motion.mp4": {
+    "bytes": 3760863,
+    "sha256": "c917eed7eede93ede8a0375852bab254becbe677ff290bb98774a7270485ee21"
+  },
+  "square.png": {
+    "bytes": 617,
+    "sha256": "1942a55574813d030e37143ca02476b4263b95d36f2975adf126f1b171ec6732"
+  },
+  "texture.png": {
+    "bytes": 276984,
+    "sha256": "e8baab9b6f8410ca2904c96f275dfc1ac69b3829cb6cbc4cb30e15df2c0e31bd"
+  }
+}

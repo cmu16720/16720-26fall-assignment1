@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\setlist{leftmargin=*,itemsep=0.4em,topsep=0.4em}
+
+% Replace these fields before compiling.
+\newcommand{\studentname}{Your name}
+\newcommand{\andrewid}{Your Andrew ID}
+\newcommand{\collaborators}{List collaborators or write ``None''}
+
+\newcommand{\response}{%
+  \textcolor{blue}{\emph{Replace this text with your response.}}%
+}
+
+\newcommand{\evidencebox}[1]{%
+  \begin{center}
+  \fcolorbox{black}{gray!8}{%
+    \parbox[c][1.45in][c]{0.9\linewidth}{\centering
+      \textcolor{blue}{\emph{Insert #1 here.}}}}
+  \end{center}
+}
+
+\newcommand{\problemheading}[3]{%
+  \section*{#1: #2 \hfill [#3 points]}
+  \label{pa1:#1}
+  \hrule
+  \vspace{0.5em}
+}
+
+\newcommand{\nextproblem}[3]{%
+  \clearpage
+  \problemheading{#1}{#2}{#3}
+}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries 16-720 Computer Vision, Fall 2026}\\[0.35em]
+  {\large\bfseries Programming Assignment 1 Written Responses}
+\end{center}
+
+\begin{tabular}{@{}ll@{}}
+\textbf{Name:} & \studentname \\
+\textbf{Andrew ID:} & \andrewid \\
+\textbf{Collaborators:} & \collaborators
+\end{tabular}
+
+\problemheading{A1}{From image shifts to the Harris matrix}{10}
+
+\begin{enumerate}[label=\textbf{A1.\arabic*.}]
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+\end{enumerate}
+
+\nextproblem{A2}{Work through one patch by hand}{7}
+
+\begin{enumerate}[label=\textbf{A2.\arabic*.}]
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+\end{enumerate}
+
+\nextproblem{A3}{Predict detector behavior}{4}
+
+\begin{enumerate}[label=\textbf{A3.\arabic*.}]
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+\end{enumerate}
+
+\nextproblem{A4}{Representation and invariance}{4}
+
+\begin{enumerate}[label=\textbf{A4.\arabic*.}]
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+\end{enumerate}
+
+\nextproblem{B1}{Read the pipeline}{5}
+
+\begin{enumerate}[label=\textbf{B1.\arabic*.}]
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+  \item \response
+\end{enumerate}
+
+\nextproblem{B2}{Harris detector}{12}
+
+\textbf{Implementation summary and parameter justification.}
+
+\response
+
+\evidencebox{the required gradient, response, and keypoint visualizations}
+
+\textbf{Synthetic-square and flat-field observations.}
+
+\response
+
+\textbf{Two-radius photograph comparison.}
+
+\response
+
+\evidencebox{the textured-photograph two-radius comparison}
+
+\nextproblem{B3}{A compact gradient descriptor}{10}
+
+\textbf{Descriptor dimension, norms, and interpretation.}
+
+\response
+
+\evidencebox{the patch/grid, quiver, and per-cell histogram evidence for two keypoints}
+
+\textbf{Original/perturbed comparison and annotation.}
+
+\response
+
+\evidencebox{the original/perturbed descriptor comparison}
+
+\nextproblem{B4}{Feature matching}{8}
+
+\textbf{Matching setup and result.}
+
+\response
+
+\evidencebox{the required correspondence visualization}
+
+\textbf{One convincing and one incorrect, rejected, or ambiguous correspondence.}
+
+\response
+
+\nextproblem{C1}{Four invariance experiments}{8}
+
+\begin{center}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.25\linewidth}rrrrr@{}}
+\toprule
+\textbf{Condition} & \textbf{Ref.} & \textbf{Dest.} & \textbf{Matches} & \textbf{Inliers} & \textbf{Fraction} \\
+\midrule
+Real illumination & & & & & \\
+Real scale/viewpoint & & & & & \\
+Synthetic Gaussian blur & & & & & \\
+Synthetic in-plane rotation & & & & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Settings and compact result summaries.}
+
+\response
+
+\evidencebox{the four condition visualizations; add pages if needed}
+
+\nextproblem{C2}{Connect experiment to theory}{4}
+
+\textbf{Condition 1: prediction, observation, and explanation.}
+
+\response
+
+\textbf{Condition 2: prediction, observation, and descriptor-invariance explanation.}
+
+\response
+
+\nextproblem{C3}{Failure case}{3}
+
+\textbf{Failure evidence and pipeline-grounded diagnosis.}
+
+\response
+
+\evidencebox{the failure visualization and relevant diagnostics}
+
+\nextproblem{D1}{Capture and target selection}{4}
+
+\textbf{Capture settings, target, motion, and privacy/access statement.}
+
+\response
+
+\evidencebox{the first frame with the target bounding box}
+
+\nextproblem{D2}{Track and stabilize}{8}
+
+\textbf{Pipeline description, transform direction, failure policy, and one design/debugging change.}
+
+\response
+
+\evidencebox{the frame-level match, inlier, and failure-state diagnostics}
+
+\nextproblem{D3}{Hero result}{10}
+
+\textbf{Submitted filename, duration, dimensions, frame rate, codec/pixel format, and file size.}
+
+\response
+
+\textbf{Brief viewing guide and technical result summary.}
+
+\response
+
+\evidencebox{a representative labeled original/object-locked frame}
+
+\nextproblem{D4}{Comprehension reflection}{3}
+
+\textbf{150--250 words. Follow either the permitted-AI or no-AI path in the specification.}
+
+\response
+
+\nextproblem{E}{Optional extension}{0--10}
+
+Delete this page if you are not submitting an extension. Otherwise, describe what is additional to the required work, give the result, and explain the evidence.
+
+\response
+
+\evidencebox{optional-extension evidence}
+
+\clearpage
+\section*{Submission acknowledgments and disclosure}
+
+\textbf{Outside sources and conventional software documentation.}
+
+\response
+
+\textbf{Permitted generative-AI use.} List the tool, the permitted section, the purpose, and how you verified the output, or write ``None.''
+
+\response
+
+\textbf{Submission audit.}
+
+\begin{itemize}[label=$\square$]
+  \item All required figures and tables appear in both the notebook and this PDF.
+  \item Every PDF page has been assigned to the matching Gradescope item.
+  \item The submitted notebook executes in order from a clean runtime.
+  \item The hero MP4 is labeled, playable, 10--20 seconds, and at most 50 MB.
+  \item Any extra credit, including showcase participation, stays within the 10-point combined cap.
+\end{itemize}
+
+\end{document}
