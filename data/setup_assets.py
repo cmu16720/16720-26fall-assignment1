@@ -9,8 +9,6 @@ safety, or accessibility reasons.
 from __future__ import annotations
 
 import argparse
-import hashlib
-import json
 import shutil
 import tempfile
 from pathlib import Path
@@ -80,8 +78,8 @@ def make_texture(height: int = 360, width: int = 480, seed: int = SEED) -> np.nd
     return image
 
 
-def make_easy_pair(reference: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Return a known mild similarity-warp matching pair."""
+def make_easy_match_image(reference: np.ndarray) -> np.ndarray:
+    """Return a known mild similarity-warped matching image."""
     height, width = reference.shape[:2]
     transform = cv2.getRotationMatrix2D(((width - 1) / 2, (height - 1) / 2), 8.0, 0.9)
     transform[:, 2] += np.array([12.0, -7.0])
@@ -94,31 +92,7 @@ def make_easy_pair(reference: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         borderValue=(0, 0, 0),
     )
     warped = np.clip(warped.astype(np.int16) + 14, 0, 255).astype(np.uint8)
-    return warped, transform
-
-
-def make_difficult_pair(reference: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Create a perspective, blur, and occlusion stress-test pair."""
-    height, width = reference.shape[:2]
-    source = np.array(
-        [[0, 0], [width - 1, 0], [width - 1, height - 1], [0, height - 1]],
-        dtype=np.float32,
-    )
-    destination = np.array(
-        [[38, 22], [width - 58, 4], [width - 8, height - 36], [17, height - 5]],
-        dtype=np.float32,
-    )
-    homography = cv2.getPerspectiveTransform(source, destination)
-    warped = cv2.warpPerspective(reference, homography, (width, height))
-    warped = cv2.GaussianBlur(warped, (11, 11), 2.2)
-    cv2.rectangle(
-        warped,
-        (width // 2, height // 3),
-        (4 * width // 5, 2 * height // 3),
-        (18, 18, 18),
-        -1,
-    )
-    return warped, homography
+    return warped
 
 
 def make_smoke_video(path: Path, reference: np.ndarray, fps: int = 15) -> None:
@@ -158,46 +132,29 @@ def make_smoke_video(path: Path, reference: np.ndarray, fps: int = 15) -> None:
         shutil.move(str(workpath), str(destination))
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1 << 20), b""):
-            digest.update(block)
-    return digest.hexdigest()
-
-
-def setup_assets(output_dir: Path) -> dict[str, dict[str, object]]:
-    """Generate all assets and return the deterministic manifest."""
+def setup_assets(output_dir: Path) -> list[Path]:
+    """Generate and return the paths to all notebook assets."""
     output_dir.mkdir(parents=True, exist_ok=True)
     square = make_square()
     flat = np.zeros_like(square)
     texture = make_texture()
-    easy, easy_transform = make_easy_pair(texture)
-    difficult, difficult_homography = make_difficult_pair(texture)
+    easy = make_easy_match_image(texture)
     images = {
         "square.png": square,
         "flat.png": flat,
         "texture.png": texture,
         "photo_texture.png": skimage_data.coffee(),
         "match_easy.png": easy,
-        "match_difficult.png": difficult,
     }
+    generated = []
     for filename, image in images.items():
-        _write_png(output_dir / filename, image)
+        path = output_dir / filename
+        _write_png(path, image)
+        generated.append(path)
     video_path = output_dir / "smoke_object_motion.mp4"
     make_smoke_video(video_path, texture)
-
-    manifest: dict[str, dict[str, object]] = {}
-    for path in sorted(output_dir.iterdir()):
-        if path.name == "ASSET_MANIFEST.json":
-            continue
-        manifest[path.name] = {"bytes": path.stat().st_size, "sha256": _sha256(path)}
-    manifest["match_easy_transform"] = {"values": easy_transform.tolist()}
-    manifest["match_difficult_homography"] = {"values": difficult_homography.tolist()}
-    (output_dir / "ASSET_MANIFEST.json").write_text(
-        json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    return manifest
+    generated.append(video_path)
+    return generated
 
 
 def main() -> None:
@@ -208,8 +165,8 @@ def main() -> None:
         default=Path(__file__).resolve().parent / "generated",
     )
     arguments = parser.parse_args()
-    manifest = setup_assets(arguments.output)
-    print(f"generated {len(manifest) - 2} assets in {arguments.output}")
+    generated = setup_assets(arguments.output)
+    print(f"generated {len(generated)} assets in {arguments.output}")
 
 
 if __name__ == "__main__":

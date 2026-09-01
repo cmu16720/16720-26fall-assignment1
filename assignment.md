@@ -42,7 +42,7 @@ The policy is defined by the work being completed, not by the file or chat in wh
 | Part D | Generative AI is permitted and encouraged with disclosure, but it may not replace or modify the required Part B implementation. |
 | Part E | Generative AI is permitted with disclosure. |
 
-For Part A and the required Part B implementation, you may use course notes, textbooks, papers, conventional web resources, official NumPy/PyTorch/OpenCV documentation, and course staff as allowed by the collaboration policy. Black-box feature routines do not satisfy the implementation requirements.
+For Part A and the required Part B implementation, you may use course notes, textbooks, papers, conventional web resources, official NumPy/OpenCV documentation, and course staff as allowed by the collaboration policy. Black-box feature routines do not satisfy the implementation requirements.
 
 Generative AI is never required. If you do not use it in a permitted section, say so and complete the no-AI alternative in D4. In all cases, you are responsible for understanding, testing, and disclosing what you submit.
 
@@ -55,7 +55,7 @@ Generative AI is never required. If you do not use it in a permitted section, sa
 - The shared random seed is `16720`.
 - Required functions must not mutate their inputs.
 - Required functions must validate ranks, compatible shapes, and documented parameter ranges. A nonfinite response pixel in NMS and a nonfinite descriptor row in matching are invalid candidates and are discarded as specified below.
-- Use basic NumPy array operations and the supplied helpers for the required Part B functions. PyTorch may be used only where the starter explicitly permits it.
+- Use basic NumPy array operations and the supplied helpers for the required Part B functions.
 - Do not replace any required function with `cv2.cornerHarris`, `cv2.goodFeaturesToTrack`, SIFT, ORB, `BFMatcher`, FLANN, a learned feature system, or an equivalent black box. Such methods may be used only for a clearly separated Part E comparison after the required pipeline is complete.
 
 Every graded figure and table must appear both as a saved output in the executable notebook and in the matching labeled section of the written PDF.

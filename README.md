@@ -1,4 +1,6 @@
-# 1. PA1: Local Features and Object-Locked Video
+# 16-720 Computer Vision — Programming Assignment 1
+
+## Local Features and Object-Locked Video
 
 | Item | Value |
 |---|---|
@@ -14,13 +16,13 @@ In this assignment you will derive, implement, test, and apply a complete classi
 
 Read the assignment handout (the distributed PA1 specification PDF) before editing code. It is the authoritative student specification; this README is a setup and submission guide.
 
-## 2. Start here
+## 1. Start here
 
 The recommended workflow is Google Colab. Download the complete course-supplied
 `pa1_student.zip`; the notebook by itself does not contain the Python package,
 tests, data, or shared requirements.
 
-1. From the ZIP, locate `notebooks/pa1_starter.ipynb` and upload that notebook to a fresh Colab runtime.
+1. From the ZIP, locate `pa1_starter.ipynb` and upload that notebook to a fresh Colab runtime.
 2. Run its first environment cell and choose the **complete, unopened `pa1_student.zip`** when the upload picker appears. The cell checks every ZIP path, extracts the release beneath `/content`, changes to the release root, and installs `requirements-colab.txt`.
 3. If Colab asks to restart after installation, restart and rerun the environment cell; it will reuse the extracted release.
 4. Run the convention, seed, and data-setup cells before editing student code.
@@ -43,24 +45,22 @@ run `python -m pip install -e '.[dev]'` before the final two commands.
 
 The notebook and public tests require no paid compute, credentials, API keys, or private service.
 
-## 3. Student release map
+## 2. Student release map
 
 | Path | Purpose |
 |---|---|
 | `assignment.md` | Source text of the assignment handout PDF |
-| `expected_outputs.md` | Non-revealing sanity checks and diagnostics |
-| `README.md` | Setup, workflow, and submission checklist |
-| `notebooks/pa1_starter.ipynb` | Colab workflow and required evidence |
+| `pa1_starter.ipynb` | Colab workflow and required evidence |
 | `student/pa1.py` | Functions you implement |
 | `common/` | Supplied plotting, image, experiment, geometry, and video helpers |
-| `data/` | Small deterministic examples, approved fallback media, and provenance |
+| `data/` | Deterministic asset generator and data provenance |
 | `tests/test_pa1_public.py` | Public interface and sanity checks |
 | `answer_template.tex` | Stable written-response and Gradescope template |
 | `requirements-colab.txt` | Shared runtime requirements |
 
 The staff solution, private tests, rubric details, and grader notes are not part of the student release.
 
-## 4. Academic-integrity and generative-AI boundaries
+## 3. Academic-integrity and generative-AI boundaries
 
 These boundaries apply even when a tool is used only to “check” or rewrite work.
 
@@ -72,11 +72,11 @@ These boundaries apply even when a tool is used only to “check” or rewrite w
 | Part D | Permitted and encouraged, with disclosure; it may not replace your Part B implementation |
 | Part E | Permitted, with disclosure |
 
-For Part A and the required Part B implementation, you may use course notes, textbooks, papers, conventional web resources, NumPy/PyTorch/OpenCV documentation, and course staff as allowed by the course collaboration policy.
+For Part A and the required Part B implementation, you may use course notes, textbooks, papers, conventional web resources, NumPy/OpenCV documentation, and course staff as allowed by the course collaboration policy.
 
 Generative AI is optional everywhere it is permitted. If you do not use it, D4 provides a non-AI reflection alternative. A permitted AI tool may help with Part D infrastructure, but it may not create or repair the graded detector, descriptor, or matcher from Part B. Disclose collaborators, outside resources, and every permitted use of generative AI in the written PDF.
 
-## 5. Fixed technical conventions
+## 4. Fixed technical conventions
 
 - Course-loaded images are two-dimensional `float32` NumPy arrays normalized to `[0, 1]`; graded functions never clip or renormalize their numeric inputs.
 - Arrays use `(row, column)` indexing; points and keypoints use Cartesian `(x, y)` order.
@@ -89,13 +89,13 @@ Generative AI is optional everywhere it is permitted. If you do not use it, D4 p
 
 The exact contracts, border rules, sorting rules, empty-output shapes, and validation requirements are in the assignment handout. Treat those details as part of the problem.
 
-## 6. Capture, privacy, and fallback policy
+## 5. Capture, privacy, and fallback policy
 
 Record in landscape orientation at 720p and 30 fps when possible. Choose a textured, matte, approximately rigid target that occupies about 25–60% of the frame. Keep it visible while introducing moderate translation, rotation, scale change, and limited viewpoint change. Avoid rapid motion, severe blur, glossy or featureless surfaces, and highly repetitive targets.
 
 Do not record non-consenting people, private documents, personal information on screens, or unsafe/prohibited locations. A course-provided capture alternative is available only with staff approval for access, privacy, safety, or accessibility reasons. Request approval before relying on it. The alternative receives identical grading and is not a general substitute for the controlled capture work.
 
-## 7. Required submission
+## 6. Required submission
 
 Submit the following through the course submission system:
 
@@ -109,7 +109,7 @@ Every graded figure and table must appear both in the executable notebook and in
 
 Use the answer template without changing its stable labels. Begin each labeled problem on the page already assigned to it, upload one PDF, assign every answer page to the matching Gradescope item, and inspect the rendered preview.
 
-## 8. Verification workflow
+## 7. Verification workflow
 
 Before submission:
 
@@ -121,7 +121,7 @@ Before submission:
 6. compile the answer template and verify every Gradescope page assignment; and
 7. complete the acknowledgment, AI-disclosure, and file checklist.
 
-## 9. Common debugging checks
+## 8. Common debugging checks
 
 - If detections appear transposed, check every conversion between array indexing `(y, x)` and keypoint order `(x, y)`.
 - If a flat image produces points, inspect derivative borders, response threshold semantics, and handling of nonpositive maxima.
@@ -129,19 +129,3 @@ Before submission:
 - If all matches pass or all fail, inspect zero descriptors, the two-neighbor requirement, and the strict ratio comparison.
 - If stabilization moves in the wrong direction, verify that the estimated transform maps current points to reference points.
 - If a few failed frames corrupt the entire video, use the supplied bounded failure policy rather than chaining frame-to-frame transforms.
-
-## 10. Final checklist
-
-- [ ] Part A was completed without generative AI and typeset in LaTeX.
-- [ ] The required Part B implementation was completed without generative AI.
-- [ ] Public tests pass, and the notebook runs top to bottom from a clean runtime.
-- [ ] B1–B4 figures and explanations appear in both the notebook and PDF.
-- [ ] C1 contains exactly the four required conditions and the shared metric table.
-- [ ] C2 analyzes two conditions, including one descriptor-invariance analysis.
-- [ ] C3 documents a clear failure and a technically grounded diagnosis.
-- [ ] D1 shows the first-frame target box and compliant capture evidence.
-- [ ] D2 uses Part B correspondences and the supplied current-to-reference geometry.
-- [ ] The hero result is labeled, playable, 10–20 seconds, and at most 50 MB.
-- [ ] D4 is 150–250 words and follows either the AI-use or no-AI path.
-- [ ] The PDF page mapping, acknowledgments, and AI disclosure are complete.
-- [ ] Any extension/showcase credit stays within the 10-point combined cap.

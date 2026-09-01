@@ -122,28 +122,6 @@ def load_image(path: str | Path, grayscale: bool = False) -> np.ndarray:
     return encoded
 
 
-def save_rgb(path: str | Path, image: np.ndarray) -> Path:
-    """Write a grayscale or RGB image, creating its parent directory."""
-    destination = Path(path)
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    array = np.asarray(image)
-    if np.issubdtype(array.dtype, np.floating):
-        array = np.clip(array, 0.0, 1.0)
-        array = np.rint(array * 255.0).astype(np.uint8)
-    if array.ndim == 3 and array.shape[2] in (3, 4):
-        conversion = cv2.COLOR_RGB2BGR if array.shape[2] == 3 else cv2.COLOR_RGBA2BGRA
-        array = cv2.cvtColor(array, conversion)
-    # Encode in memory because cv2.imwrite cannot open non-ASCII paths on Windows.
-    try:
-        ok, encoded = cv2.imencode(destination.suffix or ".png", array)
-    except cv2.error as error:
-        raise OSError(f"could not write image: {destination}") from error
-    if not ok:
-        raise OSError(f"could not write image: {destination}")
-    encoded.tofile(destination)
-    return destination
-
-
 def plot_gradients_and_response(
     image: np.ndarray,
     Ix: np.ndarray,
@@ -321,23 +299,6 @@ def plot_descriptor_diagnostics(
     histogram_axis.set_yticklabels([f"cell {index}" for index in range(flattened.shape[0])])
     return figure, np.asarray(
         [patch_axis, gradient_axis, descriptor_axis, histogram_axis], dtype=object
-    )
-
-
-def add_brightness(image: np.ndarray, offset: float) -> np.ndarray:
-    """Apply a clipped additive brightness offset to a normalized image."""
-    return np.clip(np.asarray(image, dtype=np.float32) + float(offset), 0.0, 1.0)
-
-
-def add_gaussian_noise(
-    image: np.ndarray, sigma: float, rng: np.random.Generator
-) -> np.ndarray:
-    """Apply deterministic Gaussian noise using the caller's generator."""
-    if float(sigma) < 0.0:
-        raise ValueError("sigma must be nonnegative")
-    noise = rng.normal(0.0, float(sigma), size=np.asarray(image).shape)
-    return np.clip(np.asarray(image, dtype=np.float32) + noise, 0.0, 1.0).astype(
-        np.float32
     )
 
 
