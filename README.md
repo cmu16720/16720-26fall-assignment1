@@ -1,4 +1,4 @@
-# 16-720 Computer Vision — Programming Assignment 1
+# 16-720 Computer Vision — Assignment 1
 
 ## Local Features and Object-Locked Video
 
@@ -18,18 +18,18 @@ Read the assignment handout (the distributed PA1 specification PDF) before editi
 
 ## 1. Start here
 
-The recommended workflow is Google Colab. Download the complete course-supplied
-`pa1_student.zip`; the notebook by itself does not contain the Python package,
-tests, data, or shared requirements.
+The recommended workflow is Google Colab. The notebook depends on the rest of
+this repository, so keep a repository ZIP available when starting a new runtime.
 
-1. From the ZIP, locate `pa1_starter.ipynb` and upload that notebook to a fresh Colab runtime.
-2. Run its first environment cell and choose the **complete, unopened `pa1_student.zip`** when the upload picker appears. The cell checks every ZIP path, extracts the release beneath `/content`, changes to the release root, and installs `requirements-colab.txt`.
-3. If Colab asks to restart after installation, restart and rerun the environment cell; it will reuse the extracted release.
-4. Run the convention, seed, and data-setup cells before editing student code.
-5. Complete the required functions in `student/pa1.py` in problem order.
-6. Run the public checks after each function, then execute the notebook from top to bottom.
-7. Complete the controlled experiments before recording the final video.
-8. Compile `answer_template.tex` and perform the submission audit in the notebook.
+1. On GitHub, choose **Code → Download ZIP** and keep the downloaded repository archive unopened.
+2. Download the root-level `pa1_starter.ipynb` separately and upload it to a fresh Colab runtime.
+3. Run its first environment cell and choose the repository ZIP when prompted. The cell validates the archive paths, extracts the repository beneath `/content`, changes to its root, and installs `requirements-colab.txt`.
+4. If Colab asks to restart after installation, restart and rerun the environment cell; it will reuse the extracted repository.
+5. Run the convention, seed, and data-setup cells before editing student code.
+6. Complete the required functions in `student/pa1.py` in problem order.
+7. Run the public checks after each function, then execute the notebook from top to bottom.
+8. Complete the controlled experiments before recording the final video.
+9. Compile `answer_template.tex` and perform the submission audit in the notebook.
 
 Python 3.10 or newer is required for local work. From the repository root:
 
