@@ -45,22 +45,7 @@ run `python -m pip install -e '.[dev]'` before the final two commands.
 
 The notebook and public tests require no paid compute, credentials, API keys, or private service.
 
-## 2. Student release map
-
-| Path | Purpose |
-|---|---|
-| `assignment.md` | Source text of the assignment handout PDF |
-| `pa1_starter.ipynb` | Colab workflow and required evidence |
-| `student/pa1.py` | Functions you implement |
-| `common/` | Supplied plotting, image, experiment, geometry, and video helpers |
-| `data/` | Deterministic asset generator and data provenance |
-| `tests/test_pa1_public.py` | Public interface and sanity checks |
-| `answer_template.tex` | Stable written-response and Gradescope template |
-| `requirements-colab.txt` | Shared runtime requirements |
-
-The staff solution, private tests, rubric details, and grader notes are not part of the student release.
-
-## 3. Academic-integrity and generative-AI boundaries
+## 2. Academic-integrity and generative-AI boundaries
 
 These boundaries apply even when a tool is used only to “check” or rewrite work.
 
@@ -76,26 +61,13 @@ For Part A and the required Part B implementation, you may use course notes, tex
 
 Generative AI is optional everywhere it is permitted. If you do not use it, D4 provides a non-AI reflection alternative. A permitted AI tool may help with Part D infrastructure, but it may not create or repair the graded detector, descriptor, or matcher from Part B. Disclose collaborators, outside resources, and every permitted use of generative AI in the written PDF.
 
-## 4. Fixed technical conventions
-
-- Course-loaded images are two-dimensional `float32` NumPy arrays normalized to `[0, 1]`; graded functions never clip or renormalize their numeric inputs.
-- Arrays use `(row, column)` indexing; points and keypoints use Cartesian `(x, y)` order.
-- The shared random seed is `16720`.
-- Gradients use centered differences; `Ix` is zero in the first/last columns and `Iy` is zero in the first/last rows.
-- Harris uses `sigma=1.5`, `k=0.04`, and deterministic greedy Euclidean-disk NMS by default.
-- Descriptors use a `16 x 16` patch, a `4 x 4` cell grid, and 8 orientation bins, for 128 values.
-- Matching uses Euclidean distance and a strict nearest-neighbor ratio test with default ratio `0.80`.
-- The supplied estimator maps current-frame points to reference-frame points. Warping uses that mapping to align the current frame to the reference.
-
-The exact contracts, border rules, sorting rules, empty-output shapes, and validation requirements are in the assignment handout. Treat those details as part of the problem.
-
-## 5. Capture, privacy, and fallback policy
+## 3. Capture, privacy, and fallback policy
 
 Record in landscape orientation at 720p and 30 fps when possible. Choose a textured, matte, approximately rigid target that occupies about 25–60% of the frame. Keep it visible while introducing moderate translation, rotation, scale change, and limited viewpoint change. Avoid rapid motion, severe blur, glossy or featureless surfaces, and highly repetitive targets.
 
 Do not record non-consenting people, private documents, personal information on screens, or unsafe/prohibited locations. A course-provided capture alternative is available only with staff approval for access, privacy, safety, or accessibility reasons. Request approval before relying on it. The alternative receives identical grading and is not a general substitute for the controlled capture work.
 
-## 6. Required submission
+## 4. Required submission
 
 Submit the following through the course submission system:
 
@@ -109,7 +81,7 @@ Every graded figure and table must appear both in the executable notebook and in
 
 Use the answer template without changing its stable labels. Begin each labeled problem on the page already assigned to it, upload one PDF, assign every answer page to the matching Gradescope item, and inspect the rendered preview.
 
-## 7. Verification workflow
+## 5. Verification workflow
 
 Before submission:
 
@@ -120,12 +92,3 @@ Before submission:
 5. play the exported MP4 outside Colab and verify its duration, codec, pixel format, dimensions, frame rate, and size;
 6. compile the answer template and verify every Gradescope page assignment; and
 7. complete the acknowledgment, AI-disclosure, and file checklist.
-
-## 8. Common debugging checks
-
-- If detections appear transposed, check every conversion between array indexing `(y, x)` and keypoint order `(x, y)`.
-- If a flat image produces points, inspect derivative borders, response threshold semantics, and handling of nonpositive maxima.
-- If descriptors have the wrong length, check cell traversal and make the orientation bin the fastest-changing index.
-- If all matches pass or all fail, inspect zero descriptors, the two-neighbor requirement, and the strict ratio comparison.
-- If stabilization moves in the wrong direction, verify that the estimated transform maps current points to reference points.
-- If a few failed frames corrupt the entire video, use the supplied bounded failure policy rather than chaining frame-to-frame transforms.
