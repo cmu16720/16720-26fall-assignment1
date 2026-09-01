@@ -2,8 +2,6 @@
 
 **Local Features and Object-Locked Video**
 
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cmu16720/16720-26fall-assignment1/blob/main/pa1_starter.ipynb)
-
 | | |
 |---|---|
 | Release | September 8, 2026 |
