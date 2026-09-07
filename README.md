@@ -20,6 +20,7 @@ chosen object remains fixed while the surrounding scene moves.
 Read the [assignment specification](assignment.md) before editing code. It is
 the authoritative source for requirements, conventions, grading, and policy.
 
+- Download the [Assignment instructions (PDF)](assignment_instructions.pdf) for a printable handout.
 - Work through the [starter notebook](pa1_starter.ipynb).
 - Implement the required functions in [`student/pa1.py`](student/pa1.py).
 - Write responses in [`answer_template.tex`](answer_template.tex).
