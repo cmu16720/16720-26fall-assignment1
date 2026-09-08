@@ -3,3 +3,5 @@
 opencv-python-headless>=4.8,<5
 scikit-image>=0.22,<1
 imageio-ffmpeg>=0.5,<1
+
+pytest>=8,<10

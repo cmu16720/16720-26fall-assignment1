@@ -122,6 +122,28 @@ def load_image(path: str | Path, grayscale: bool = False) -> np.ndarray:
     return encoded
 
 
+def save_rgb(path: str | Path, image: np.ndarray) -> Path:
+    """Write a grayscale or RGB image, creating its parent directory."""
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    array = np.asarray(image)
+    if np.issubdtype(array.dtype, np.floating):
+        array = np.clip(array, 0.0, 1.0)
+        array = np.rint(array * 255.0).astype(np.uint8)
+    if array.ndim == 3 and array.shape[2] in (3, 4):
+        conversion = cv2.COLOR_RGB2BGR if array.shape[2] == 3 else cv2.COLOR_RGBA2BGRA
+        array = cv2.cvtColor(array, conversion)
+    # Encode in memory because cv2.imwrite cannot open non-ASCII paths on Windows.
+    try:
+        ok, encoded = cv2.imencode(destination.suffix or ".png", array)
+    except cv2.error as error:
+        raise OSError(f"could not write image: {destination}") from error
+    if not ok:
+        raise OSError(f"could not write image: {destination}")
+    encoded.tofile(destination)
+    return destination
+
+
 def plot_gradients_and_response(
     image: np.ndarray,
     Ix: np.ndarray,
@@ -275,7 +297,7 @@ def plot_descriptor_diagnostics(
         xx,
         yy,
         gx[::step, ::step],
-        -gy[::step, ::step],
+        gy[::step, ::step],
         color="cyan",
         angles="xy",
         scale_units="xy",
@@ -299,6 +321,23 @@ def plot_descriptor_diagnostics(
     histogram_axis.set_yticklabels([f"cell {index}" for index in range(flattened.shape[0])])
     return figure, np.asarray(
         [patch_axis, gradient_axis, descriptor_axis, histogram_axis], dtype=object
+    )
+
+
+def add_brightness(image: np.ndarray, offset: float) -> np.ndarray:
+    """Apply a clipped additive brightness offset to a normalized image."""
+    return np.clip(np.asarray(image, dtype=np.float32) + float(offset), 0.0, 1.0)
+
+
+def add_gaussian_noise(
+    image: np.ndarray, sigma: float, rng: np.random.Generator
+) -> np.ndarray:
+    """Apply deterministic Gaussian noise using the caller's generator."""
+    if float(sigma) < 0.0:
+        raise ValueError("sigma must be nonnegative")
+    noise = rng.normal(0.0, float(sigma), size=np.asarray(image).shape)
+    return np.clip(np.asarray(image, dtype=np.float32) + noise, 0.0, 1.0).astype(
+        np.float32
     )
 
 
@@ -577,6 +616,12 @@ def read_video(
     max_frames: int | None = None,
 ) -> tuple[list[np.ndarray], float]:
     """Decode an RGB frame list with deterministic temporal sampling/resizing."""
+    if not np.isfinite(target_fps) or float(target_fps) <= 0:
+        raise ValueError("target_fps must be positive and finite")
+    if not isinstance(max_width, (int, np.integer)) or max_width <= 0:
+        raise ValueError("max_width must be a positive integer")
+    if max_frames is not None and (not isinstance(max_frames, (int, np.integer)) or max_frames <= 0):
+        raise ValueError("max_frames must be a positive integer or None")
     source = Path(path)
     scratch: Path | None = None
     capture = cv2.VideoCapture(str(source))
@@ -593,15 +638,17 @@ def read_video(
         source_fps = float(capture.get(cv2.CAP_PROP_FPS))
         if not np.isfinite(source_fps) or source_fps <= 0.0:
             source_fps = float(target_fps)
-        step = max(1, int(round(source_fps / float(target_fps))))
-        output_fps = source_fps / step
+        output_fps = min(source_fps, float(target_fps))
+        # Sample the nearest source frame at each output timestamp. Alternating
+        # strides handle rates such as 20/24/25 fps without exceeding target_fps.
+        source_frames_per_output = source_fps / output_fps
         frames: list[np.ndarray] = []
         source_index = 0
         while True:
             ok, bgr = capture.read()
             if not ok:
                 break
-            if source_index % step == 0:
+            if source_index >= int(np.floor(len(frames) * source_frames_per_output + 0.5)):
                 height, width = bgr.shape[:2]
                 if width > int(max_width):
                     scale = int(max_width) / width

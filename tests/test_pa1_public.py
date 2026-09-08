@@ -97,7 +97,7 @@ def test_descriptor_horizontal_field_has_only_bin_zero() -> None:
 
 def test_descriptor_empty_and_flat_contracts() -> None:
     zeros = np.zeros((10, 10), dtype=np.float32)
-    empty = pa1.describe_keypoints(zeros, zeros, np.empty((0, 2)), 16, 4, 8)
+    empty = pa1.describe_keypoints(zeros, zeros, np.empty((0, 2), dtype=np.int64), 16, 4, 8)
     assert empty.shape == (0, 128)
     flat = pa1.describe_keypoints(zeros, zeros, np.array([[0, 0]]), 16, 4, 8)
     np.testing.assert_array_equal(flat, np.zeros((1, 128), dtype=np.float32))
@@ -119,7 +119,25 @@ def test_matcher_ratio_and_confidence_order() -> None:
 )
 def test_matcher_valid_empty_cases(shape1: tuple[int, int], shape2: tuple[int, int]) -> None:
     matches, confidence = pa1.match_descriptors(
-        np.empty(shape1, dtype=np.float32), np.empty(shape2, dtype=np.float32), 0.8
+        np.zeros(shape1, dtype=np.float32), np.zeros(shape2, dtype=np.float32), 0.8
     )
     assert matches.shape == (0, 2)
     assert confidence.shape == (0,)
+
+
+def test_nms_ties_use_y_then_x_and_ignore_nonfinite() -> None:
+    response = np.ones((3, 4), dtype=np.float32)
+    response[0, 0] = np.nan
+    points, scores = pa1.nonmax_suppression(response, 1.0, radius=0, max_points=4)
+    np.testing.assert_array_equal(points, [[1, 0], [2, 0], [3, 0], [0, 1]])
+    np.testing.assert_array_equal(scores, np.ones(4))
+
+
+def test_nms_border_and_exact_distance_contract() -> None:
+    response = np.zeros((12, 12), dtype=np.float32)
+    response[1, 1] = 20.0  # Removed by radius-two border.
+    response[3, 3] = 10.0
+    response[3, 5] = 9.0  # Exactly radius two: suppressed.
+    response[3, 6] = 8.0  # Distance three: accepted.
+    points, _ = pa1.nonmax_suppression(response, 0.1, radius=2, max_points=20)
+    np.testing.assert_array_equal(points, [[3, 3], [6, 3]])

@@ -17,10 +17,10 @@ chosen object remains fixed while the surrounding scene moves.
 
 ## Start here
 
-Read the [assignment specification](assignment.md) before editing code. It is
-the authoritative source for requirements, conventions, grading, and policy.
+Read the [assignment instructions (PDF)](assignment_instructions.pdf) before editing code.
+It is the authoritative source for all requirements, numerical contracts, grading,
+and policy. The notebook is its executable companion.
 
-- Download the [Assignment instructions (PDF)](assignment_instructions.pdf) for a printable handout.
 - Work through the [starter notebook](pa1_starter.ipynb).
 - Implement the required functions in [`student/pa1.py`](student/pa1.py).
 - Write responses in [`answer_template.tex`](answer_template.tex).
@@ -37,6 +37,7 @@ cd 16720-26fall-assignment1
 uv venv .venv
 uv pip install --python .venv/bin/python -e '.[dev]'
 .venv/bin/python data/setup_assets.py
+# Run after implementing B2–B4; the untouched starter is expected to fail.
 .venv/bin/python -m pytest tests/test_pa1_public.py -q
 ```
 
@@ -54,7 +55,7 @@ project with `python -m pip install -e '.[dev]'`.
 
 Disclose collaborators, outside resources, and every permitted use of
 generative AI in the written PDF. See the
-[assignment specification](assignment.md#4-academic-integrity-and-generative-ai-policy)
+[assignment PDF, Section 4](assignment_instructions.pdf)
 for the complete policy.
 
 ## Submission
@@ -70,4 +71,19 @@ Submit through the course submission system:
 Before submitting, run the public tests in a clean process, execute the notebook
 from a fresh runtime, inspect the compiled PDF, and play the exported video
 outside Colab. Verify every detailed requirement against the
-[assignment specification](assignment.md#12-submission-specification).
+[assignment PDF, Section 12](assignment_instructions.pdf).
+
+## Colab editing and PDF evidence
+
+Upload `pa1_starter.ipynb` to Colab, then upload the complete repository ZIP when
+the first cell prompts for it. In the Files pane, open `student/pa1.py`, save your
+edits, and run the notebook's reload cell before rerunning dependent cells.
+Download edited code regularly; saving the notebook does not back up separate
+runtime files. The final backup cell downloads code and artifacts. Download the
+executed notebook separately with File → Download → Download .ipynb.
+
+The notebook saves supplied figures to `artifacts/`. Save your added figures there
+too, upload them alongside `answer_template.tex` in Overleaf, and replace each
+relevant evidence box with `\includegraphics[width=\linewidth]{your_figure.png}`.
+Compile with pdfLaTeX and inspect every answer page. The notebook includes a
+worked save example and full target-box/tracking-diagnostics plots.
