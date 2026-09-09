@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | Release | September 8, 2026 |
-| Due | September 29, 2026 |
+| Due | September 29, 2026, 11:59 pm ET |
 | Credit | 100 points, plus up to 10 optional points |
 | Expected effort | 8–10 hours |
 | Compute | Google Colab; CPU is sufficient |
@@ -15,7 +15,7 @@ Build a classical local-feature pipeline—Harris corners, a compact gradient
 descriptor, and ratio-test matching—then use it to create a video in which a
 chosen object remains fixed while the surrounding scene moves.
 
-## Start here
+## Getting started
 
 Read the [assignment instructions (PDF)](assignment_instructions.pdf) before editing code.
 It is the authoritative source for all requirements, numerical contracts, grading,
@@ -44,7 +44,13 @@ uv pip install --python .venv/bin/python -e '.[dev]'
 If `uv` is unavailable, create a standard virtual environment and install the
 project with `python -m pip install -e '.[dev]'`.
 
-## Academic integrity and generative AI
+## Collaboration, academic integrity, and generative AI
+
+Talk to your classmates: discussing derivations, debugging strategies, and
+experimental design together is one of the best ways to learn this material, and
+we encourage it, as we do office hours. Share ideas, not artifacts — everything
+you submit must be produced by you, you may not read or copy another student's
+solutions, and you must list everyone you worked with in your acknowledgments.
 
 | Work | Policy |
 |---|---|
